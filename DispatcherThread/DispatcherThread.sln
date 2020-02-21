@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DispatcherThread", "DispatcherThread\DispatcherThread.csproj", "{E472545A-2EA2-4126-84D9-C9FD4C095732}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DispatcherThread.Sample", "DispatcherThread.Sample\DispatcherThread.Sample.csproj", "{27980BEF-D017-4831-9F60-28EB316A4E83}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E472545A-2EA2-4126-84D9-C9FD4C095732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E472545A-2EA2-4126-84D9-C9FD4C095732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E472545A-2EA2-4126-84D9-C9FD4C095732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E472545A-2EA2-4126-84D9-C9FD4C095732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27980BEF-D017-4831-9F60-28EB316A4E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27980BEF-D017-4831-9F60-28EB316A4E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27980BEF-D017-4831-9F60-28EB316A4E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27980BEF-D017-4831-9F60-28EB316A4E83}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
