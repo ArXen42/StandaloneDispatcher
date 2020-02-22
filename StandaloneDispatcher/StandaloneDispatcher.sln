@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher", "StandaloneDispatcher\StandaloneDispatcher.csproj", "{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher", "src\StandaloneDispatcher\StandaloneDispatcher.csproj", "{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Sample", "StandaloneDispatcher.Sample\StandaloneDispatcher.Sample.csproj", "{D1465998-1DE4-4A94-BC34-D0902902B919}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Sample", "src\StandaloneDispatcher.Sample\StandaloneDispatcher.Sample.csproj", "{D1465998-1DE4-4A94-BC34-D0902902B919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Tests", "StandaloneDispatcher.Tests\StandaloneDispatcher.Tests.csproj", "{F6F88653-12BA-4071-BB52-DC6802E30A93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Tests", "src\StandaloneDispatcher.Tests\StandaloneDispatcher.Tests.csproj", "{F6F88653-12BA-4071-BB52-DC6802E30A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Benchmarks", "StandaloneDispatcher.Benchmarks\StandaloneDispatcher.Benchmarks.csproj", "{0055A023-5363-4F46-A364-A53D8495044F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Benchmarks", "src\StandaloneDispatcher.Benchmarks\StandaloneDispatcher.Benchmarks.csproj", "{0055A023-5363-4F46-A364-A53D8495044F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
