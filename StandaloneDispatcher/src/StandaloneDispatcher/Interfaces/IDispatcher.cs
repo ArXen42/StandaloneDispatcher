@@ -24,8 +24,6 @@ namespace StandaloneDispatcher.Interfaces
 		/// </summary>
 		Task InvokeShutdownAsync();
 
-		// void          Invoke(Action                      action, DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default);
-		// TResult       Invoke<TResult>(Func<TResult>      func,   DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default) where TResult : class;
 		Task          InvokeAsync(Action                 action, DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default);
 		Task<TResult> InvokeAsync<TResult>(Func<TResult> func,   DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default) where TResult : class;
 	}

@@ -1,0 +1,15 @@
+<Project>
+    <PropertyGroup>
+        <Product>StandaloneDispatcher</Product>
+        <Authors>Georgii Pelageikin</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Version>1.0</Version>
+        <AssemblyVersion>1.0</AssemblyVersion>
+        <PackageProjectUrl>https://github.com/ArXen42/StandaloneDispatcher</PackageProjectUrl>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <IncludeGetResolvedSDKReferences>true</IncludeGetResolvedSDKReferences>
+        <PackageReleaseNotes>Initial version.</PackageReleaseNotes>
+        <PackageTags>dispatcher producer-consumer single-thread</PackageTags>
+    </PropertyGroup>
+</Project>

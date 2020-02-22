@@ -123,6 +123,18 @@ namespace StandaloneDispatcher.Tests
 		}
 
 		[Fact]
+		public async Task ResultsAreForwarded()
+		{
+			using var dispatcher = new Dispatcher();
+			var       thread     = new Thread(dispatcher.Run);
+			thread.Start();
+
+			const String expectedResult = "Test";
+			String       result         = await dispatcher.InvokeAsync(() => expectedResult);
+			result.Should().BeSameAs(expectedResult);
+		}
+
+		[Fact]
 		public async Task OperationsAreExecutedInPriorityOrder()
 		{
 			using var dispatcher = new Dispatcher();
