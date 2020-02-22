@@ -8,7 +8,7 @@ using StandaloneDispatcher.Interfaces;
 namespace StandaloneDispatcher
 {
 	/// <summary>
-	///    Default implementation of <see cref="IDispatcher"/>.
+	///     Default implementation of <see cref="IDispatcher" />.
 	/// </summary>
 	public class Dispatcher : IDispatcher
 	{
@@ -17,6 +17,7 @@ namespace StandaloneDispatcher
 		private readonly ConcurrentQueue<DispatcherItem>[] _queues;
 		private readonly SemaphoreSlim                     _newWorkSemaphore;
 		private readonly TaskCompletionSource<Object>      _shutdownTaskCompletionSource;
+		private readonly Object                            _shutdownLock;
 
 		static Dispatcher()
 		{
@@ -28,6 +29,7 @@ namespace StandaloneDispatcher
 			_newWorkSemaphore             = new SemaphoreSlim(0);
 			_queues                       = new ConcurrentQueue<DispatcherItem>[PrioritiesCount];
 			_shutdownTaskCompletionSource = new TaskCompletionSource<Object>();
+			_shutdownLock                 = new Object();
 
 			for (Int32 i = 0; i < PrioritiesCount; i++)
 				_queues[i] = new ConcurrentQueue<DispatcherItem>();
@@ -47,7 +49,13 @@ namespace StandaloneDispatcher
 				_newWorkSemaphore.Wait();
 
 				if (State == DispatcherState.ShuttingDown)
+				{
+					foreach (var queue in _queues)
+					foreach (var item in queue)
+						item.SignalFinishedWithException(new OperationCanceledException());
+
 					break;
+				}
 
 				// Pick highest priority work
 				DispatcherItem dispatcherItem = null;
@@ -87,16 +95,21 @@ namespace StandaloneDispatcher
 
 		public Task InvokeShutdownAsync()
 		{
-			State = DispatcherState.ShuttingDown;
-			_newWorkSemaphore.Release();
+			lock (_shutdownLock)
+			{
+				if (State != DispatcherState.Running)
+					throw new DispatcherException($"Cannot shutdown dispatcher in current state {State}.");
 
-			return _shutdownTaskCompletionSource.Task;
+				State = DispatcherState.ShuttingDown;
+				_newWorkSemaphore.Release();
+
+				return _shutdownTaskCompletionSource.Task;
+			}
 		}
 
 		public async Task InvokeAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default)
 		{
-			if (State != DispatcherState.Running)
-				throw new DispatcherException($"Dispatcher is in {State} state, Invoke operation cannot be executed.");
+			ThrowOnInvokeIfStateIsInvalid();
 
 			var workItem = new DispatcherItem(action);
 			_queues[(Int32) priority].Enqueue(workItem);
@@ -109,8 +122,7 @@ namespace StandaloneDispatcher
 
 		public async Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default) where TResult : class
 		{
-			if (State != DispatcherState.Running)
-				throw new DispatcherException($"Dispatcher is in {State} state, Invoke operation cannot be executed.");
+			ThrowOnInvokeIfStateIsInvalid();
 
 			var workItem = new DispatcherItem(func);
 			_queues[(Int32) priority].Enqueue(workItem);
@@ -126,7 +138,14 @@ namespace StandaloneDispatcher
 
 		public void Dispose()
 		{
-			InvokeShutdownAsync().GetAwaiter().GetResult();
+			if (State == DispatcherState.Running)
+				InvokeShutdownAsync().GetAwaiter().GetResult();
+		}
+
+		private void ThrowOnInvokeIfStateIsInvalid()
+		{
+			if (State != DispatcherState.NotRun && State != DispatcherState.Running)
+				throw new DispatcherException($"Dispatcher is in {State} state, Invoke operation cannot be executed.");
 		}
 	}
 }

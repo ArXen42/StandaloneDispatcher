@@ -20,7 +20,7 @@ namespace StandaloneDispatcher.Interfaces
 		void Run();
 
 		/// <summary>
-		///     Invoke dispatcher shutdown and await shutdown completion, causing it to enter <see cref="DispatcherState.ShuttingDown"/>.
+		///     Invoke dispatcher shutdown and await shutdown completion, causing it to enter <see cref="DispatcherState.ShuttingDown" />.
 		/// </summary>
 		Task InvokeShutdownAsync();
 

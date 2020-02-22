@@ -1,7 +1,7 @@
 namespace StandaloneDispatcher.Interfaces
 {
 	/// <summary>
-	///     An enumeration describing the priorities at which operations can be invoked via the <see cref="IDispatcher"/>.
+	///     An enumeration describing the priorities at which operations can be invoked via the <see cref="IDispatcher" />.
 	/// </summary>
 	public enum DispatcherPriority
 	{

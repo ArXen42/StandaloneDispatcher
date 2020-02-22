@@ -44,9 +44,6 @@ namespace StandaloneDispatcher
 			_tcs.SetResult(null);
 		}
 
-		public Task<Object> WaitAsync(CancellationToken ct)
-		{
-			return _tcs.Task;
-		}
+		public Task<Object> WaitAsync(CancellationToken ct) => _tcs.Task;
 	}
 }
