@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Tests", "StandaloneDispatcher.Tests\StandaloneDispatcher.Tests.csproj", "{F6F88653-12BA-4071-BB52-DC6802E30A93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Benchmarks", "StandaloneDispatcher.Benchmarks\StandaloneDispatcher.Benchmarks.csproj", "{0055A023-5363-4F46-A364-A53D8495044F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{F6F88653-12BA-4071-BB52-DC6802E30A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6F88653-12BA-4071-BB52-DC6802E30A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6F88653-12BA-4071-BB52-DC6802E30A93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0055A023-5363-4F46-A364-A53D8495044F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0055A023-5363-4F46-A364-A53D8495044F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0055A023-5363-4F46-A364-A53D8495044F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0055A023-5363-4F46-A364-A53D8495044F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
