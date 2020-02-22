@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher", "StandaloneDispatcher\StandaloneDispatcher.csproj", "{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneDispatcher.Sample", "StandaloneDispatcher.Sample\StandaloneDispatcher.Sample.csproj", "{D1465998-1DE4-4A94-BC34-D0902902B919}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DE8F124-54DC-44B5-A4FA-8EEC1AA5BA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1465998-1DE4-4A94-BC34-D0902902B919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1465998-1DE4-4A94-BC34-D0902902B919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1465998-1DE4-4A94-BC34-D0902902B919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1465998-1DE4-4A94-BC34-D0902902B919}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

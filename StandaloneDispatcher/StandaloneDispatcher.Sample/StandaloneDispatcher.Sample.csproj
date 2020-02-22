@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DispatcherThread\DispatcherThread.csproj" />
+      <ProjectReference Include="..\StandaloneDispatcher\StandaloneDispatcher.csproj" />
     </ItemGroup>
 
 </Project>
