@@ -21,15 +21,19 @@ namespace StandaloneDispatcher.Benchmarks
 		}
 
 		[Benchmark]
-		public async Task ExecuteLotsOfSmallActions()
+		public async Task ExecuteEmptyAction()
+		{
+			await _dispatcher.InvokeAsync(() => { });
+		}
+
+		[Benchmark]
+		public async Task ExecuteLotsOfEmptyActions()
 		{
 			const Int32 actionsCount = 100000;
 
 			var tasks = new List<Task>();
 			for (Int32 i = 0; i < actionsCount; i++)
-			{
-				tasks.Add(_dispatcher.InvokeAsync(() => {}));
-			}
+				tasks.Add(_dispatcher.InvokeAsync(() => { }));
 
 			await Task.WhenAll(tasks);
 		}

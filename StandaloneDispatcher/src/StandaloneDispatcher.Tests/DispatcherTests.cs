@@ -105,10 +105,8 @@ namespace StandaloneDispatcher.Tests
 			}
 
 			foreach (var fallingTask in fallingTasks)
-			{
 				// Each one of them should fail
 				FluentActions.Awaiting(() => fallingTask).Should().Throw<DispatcherException>();
-			}
 
 			await shutdownTask;
 		}
