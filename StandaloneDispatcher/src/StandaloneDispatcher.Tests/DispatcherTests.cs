@@ -94,21 +94,31 @@ namespace StandaloneDispatcher.Tests
 			Forget(dispatcher.InvokeAsync(() => Thread.Sleep(10))); // Add some tasks running
 			Forget(dispatcher.InvokeAsync(() => Thread.Sleep(10))); // Add some tasks running
 
-			var shutdownTask = Task.Run(() => dispatcher.InvokeShutdownAsync()); // First, correct shutdown request
+			const Int32 requestsCount = 100;
+			const Int32 faultedCount  = requestsCount - 1;
+			var         shutdownTasks = new List<Task>();
+			Parallel.For(
+				0,
+				requestsCount,
+				i =>
+				{
+					// ReSharper disable once AccessToDisposedClosure
+					shutdownTasks.Add(Task.Run(() => dispatcher.InvokeShutdownAsync()));
+				}
+			);
 
-			var fallingTasks = new List<Task>();
-			for (Int32 i = 0; i < 100; i++)
+			try
 			{
-				// Bombard dispatcher with repeated shutdown requests
-				fallingTasks.Add(Task.Run(() => dispatcher.InvokeShutdownAsync()));
-				await Task.Delay(1);
+				await Task.WhenAll(shutdownTasks);
+			}
+			catch (Exception)
+			{
+				// ignored
 			}
 
-			foreach (var fallingTask in fallingTasks)
-				// Each one of them should fail
-				FluentActions.Awaiting(() => fallingTask).Should().Throw<DispatcherException>();
-
-			await shutdownTask;
+			FluentActions.Awaiting(async () => await Task.WhenAll(shutdownTasks)).Should().Throw<DispatcherException>();
+			shutdownTasks.Count(t => t.IsCompletedSuccessfully).Should().Be(1);
+			shutdownTasks.Count(t => t.IsFaulted).Should().Be(faultedCount);
 		}
 
 		[Fact]
@@ -120,18 +130,6 @@ namespace StandaloneDispatcher.Tests
 
 			FluentActions.Awaiting(() => dispatcher.InvokeAsync(() => throw new InvalidOperationException()))
 			             .Should().Throw<InvalidOperationException>();
-		}
-
-		[Fact]
-		public async Task ResultsAreForwarded()
-		{
-			using var dispatcher = new Dispatcher();
-			var       thread     = new Thread(dispatcher.Run);
-			thread.Start();
-
-			const String expectedResult = "Test";
-			String       result         = await dispatcher.InvokeAsync(() => expectedResult);
-			result.Should().BeSameAs(expectedResult);
 		}
 
 		[Fact]
@@ -159,6 +157,18 @@ namespace StandaloneDispatcher.Tests
 
 			await Task.WhenAll(tasks);
 			numbers.Should().BeEquivalentTo(Enumerable.Range(0, prioritiesCount));
+		}
+
+		[Fact]
+		public async Task ResultsAreForwarded()
+		{
+			using var dispatcher = new Dispatcher();
+			var       thread     = new Thread(dispatcher.Run);
+			thread.Start();
+
+			const String expectedResult = "Test";
+			String       result         = await dispatcher.InvokeAsync(() => expectedResult);
+			result.Should().BeSameAs(expectedResult);
 		}
 
 		[Fact]

@@ -14,10 +14,10 @@ namespace StandaloneDispatcher
 	{
 		private static readonly Int32 PrioritiesCount;
 
-		private readonly ConcurrentQueue<DispatcherItem>[] _queues;
 		private readonly SemaphoreSlim                     _newWorkSemaphore;
+		private readonly SemaphoreSlim                     _shutdownSemaphore;
+		private readonly ConcurrentQueue<DispatcherItem>[] _queues;
 		private readonly TaskCompletionSource<Object>      _shutdownTaskCompletionSource;
-		private readonly Object                            _shutdownLock;
 
 		static Dispatcher()
 		{
@@ -27,9 +27,9 @@ namespace StandaloneDispatcher
 		public Dispatcher()
 		{
 			_newWorkSemaphore             = new SemaphoreSlim(0);
+			_shutdownSemaphore            = new SemaphoreSlim(1);
 			_queues                       = new ConcurrentQueue<DispatcherItem>[PrioritiesCount];
 			_shutdownTaskCompletionSource = new TaskCompletionSource<Object>();
-			_shutdownLock                 = new Object();
 
 			for (Int32 i = 0; i < PrioritiesCount; i++)
 				_queues[i] = new ConcurrentQueue<DispatcherItem>();
@@ -93,18 +93,24 @@ namespace StandaloneDispatcher
 			_shutdownTaskCompletionSource.SetResult(null);
 		}
 
-		public Task InvokeShutdownAsync()
+		public async Task InvokeShutdownAsync()
 		{
-			lock (_shutdownLock)
+			await _shutdownSemaphore.WaitAsync();
+
+			try
 			{
 				if (State != DispatcherState.Running)
 					throw new DispatcherException($"Cannot shutdown dispatcher in current state {State}.");
 
 				State = DispatcherState.ShuttingDown;
 				_newWorkSemaphore.Release();
-
-				return _shutdownTaskCompletionSource.Task;
 			}
+			finally
+			{
+				_shutdownSemaphore.Release();
+			}
+
+			await _shutdownTaskCompletionSource.Task;
 		}
 
 		public async Task InvokeAsync(Action action, DispatcherPriority priority = DispatcherPriority.Normal, CancellationToken ct = default)
