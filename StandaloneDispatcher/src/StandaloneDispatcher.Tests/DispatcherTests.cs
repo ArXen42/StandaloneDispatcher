@@ -96,25 +96,17 @@ namespace StandaloneDispatcher.Tests
 
 			const Int32 requestsCount = 100;
 			const Int32 faultedCount  = requestsCount - 1;
-			var         shutdownTasks = new List<Task>();
+			var         shutdownTasks = new Task[requestsCount];
+
 			Parallel.For(
 				0,
 				requestsCount,
 				i =>
 				{
 					// ReSharper disable once AccessToDisposedClosure
-					shutdownTasks.Add(Task.Run(() => dispatcher.InvokeShutdownAsync()));
+					shutdownTasks[i] = Task.Run(dispatcher.InvokeShutdownAsync);
 				}
 			);
-
-			try
-			{
-				await Task.WhenAll(shutdownTasks);
-			}
-			catch (Exception)
-			{
-				// ignored
-			}
 
 			FluentActions.Awaiting(async () => await Task.WhenAll(shutdownTasks)).Should().Throw<DispatcherException>();
 			shutdownTasks.Count(t => t.IsCompletedSuccessfully).Should().Be(1);
